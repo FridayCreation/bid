@@ -67,15 +67,15 @@ module.exports = function (app, config, passport) {
     app.use(helpers(pkg.name))
 
     // adds CSRF support
-    if (process.env.NODE_ENV !== 'test') {
-      app.use(express.csrf())
+    // if (process.env.NODE_ENV !== 'test') {
+    //   app.use(express.csrf())
 
-      // This could be moved to view-helpers :-)
-      app.use(function(req, res, next){
-        res.locals.csrf_token = req.csrfToken()
-        next()
-      })
-    }
+    //   // This could be moved to view-helpers :-)
+    //   app.use(function(req, res, next){
+    //     res.locals.csrf_token = req.csrfToken()
+    //     next()
+    //   })
+    // }
 
     // routes should be at the last
     app.use(app.router)
@@ -97,15 +97,17 @@ module.exports = function (app, config, passport) {
       console.error(err.stack)
 
       // error page
-      res.status(500).render('500', { error: err.stack })
+      // res.status(500).render('500', { error: err.stack })
+      res.status(500).send({ errors: err.stack })
     })
 
     // assume 404 since no middleware responded
     app.use(function(req, res, next){
-      res.status(404).render('404', {
-        url: req.originalUrl,
-        error: 'Not found'
-      })
+      res.status(404).send({ 'success': false })
+      // res.status(404).render('404', {
+      //   url: req.originalUrl,
+      //   error: 'Not found'
+      // })
     })
   })
 

@@ -6,6 +6,8 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , utils = require('../../lib/utils')
+  , RichUser = mongoose.model('RichUser')
+
 
 var login = function (req, res) {
   if (req.session.returnTo) {
@@ -13,10 +15,13 @@ var login = function (req, res) {
     delete req.session.returnTo
     return
   }
-  res.redirect('/')
+  res.send({'info':'login ok'})
 }
 
-exports.signin = function (req, res) {}
+exports.signin = function (req, res) {
+
+  console.log( 'signin success ')
+}
 
 /**
  * Auth callback
@@ -52,7 +57,8 @@ exports.signup = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout()
-  res.redirect('/login')
+  // res.redirect('/login')
+  res.send( {'success': true})
 }
 
 /**
@@ -66,23 +72,41 @@ exports.session = login
  */
 
 exports.create = function (req, res) {
+
   var user = new User(req.body)
   user.provider = 'local'
-  user.save(function (err) {
-    if (err) {
-      return res.render('users/signup', {
-        errors: utils.errors(err.errors),
-        user: user,
-        title: 'Sign up'
+  user.save(function(err, user){
+    if(err){
+      res.send({
+        'errors': err.errors,
+        user: user
       })
     }
-
-    // manually login the user once successfully signed up
-    req.logIn(user, function(err) {
-      if (err) return next(err)
-      return res.redirect('/')
-    })
+    else{
+      
+      var richuser = new RichUser()
+      richuser.user = user
+      richuser.save(function(err, richuser){
+        if( err)
+          res.send( {'success': false, err: error})
+        else
+          res.send( {'success': true})
+      })
+      // req.logIn(user, function(err){
+      //   if( err)
+      //     res.send( {'success': false, err: error})
+      //   else
+      //     res.send( {'success': true})
+      // });
+      
+      // var notify = require('../mailer/notify')
+      // notify.welcome({
+      //   currentUser: user
+      // });
+    }
   })
+
+
 }
 
 /**

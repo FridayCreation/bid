@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
   , crypto = require('crypto')
   , _ = require('underscore')
   , authTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin']
+  , hat = require('hat')
 
 /**
  * User Schema
@@ -24,7 +25,8 @@ var UserSchema = new Schema({
   twitter: {},
   github: {},
   google: {},
-  linkedin: {}
+  linkedin: {},
+  richUser: {type: Schema.ObjectId, ref: 'RichUser'}
 })
 
 /**
@@ -96,6 +98,9 @@ UserSchema.path('hashed_password').validate(function (hashed_password) {
 UserSchema.pre('save', function(next) {
   if (!this.isNew) return next()
 
+  // Generate a random access_token
+  this.authToken = hat()
+
   if (!validatePresenceOf(this.password)
     && authTypes.indexOf(this.provider) === -1)
     next(new Error('Invalid password'))
@@ -149,6 +154,13 @@ UserSchema.methods = {
     } catch (err) {
       return ''
     }
+  }
+}
+
+UserSchema.statics = {
+  loadByToken: function(token,cb){
+    this.findOne({'authToken': token})
+    .exec(cb)
   }
 }
 

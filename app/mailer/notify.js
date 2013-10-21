@@ -48,7 +48,25 @@ var Notify = {
     })*/
 
     notifier.send('comment', obj, cb)
+  },
+
+  welcome: function( options, cb){
+    var user = options.currentUser
+    var notifier = new Notifier(config.notifier)
+
+    var obj = {
+      to: 'loveson821@gmail.com' || user.email,
+      from: 'info@fridaycreation.com',
+      subject: ' Welcome to bid',
+      locals: {
+        content: 'welcome fuck yeah'
+      }
+    }
+
+    notifier.send('welcome', obj, cb)
   }
+
+
 }
 
 /**

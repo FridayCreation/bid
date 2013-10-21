@@ -12,6 +12,8 @@ var mongoose = require('mongoose')
 
 var cookies, count
 
+
+
 /**
  * Users tests
  */
@@ -33,7 +35,7 @@ describe('Users', function () {
         .field('username', 'foobar')
         .field('email', '')
         .field('password', 'foobar')
-        .expect('Content-Type', /html/)
+        .expect('Content-Type', /json/)
         .expect(200)
         .expect(/Email cannot be blank/)
         .end(done)
@@ -55,19 +57,36 @@ describe('Users', function () {
         })
       })
 
-      it('should redirect to /articles', function (done) {
+      it('should return json include success:true', function (done) {
         request(app)
         .post('/users')
         .field('name', 'Foo bar')
         .field('username', 'foobar')
         .field('email', 'foobar@example.com')
         .field('password', 'foobar')
-        .expect('Content-Type', /plain/)
-        .expect('Location', /\//)
-        .expect(302)
-        .expect(/Moved Temporarily/)
+        .expect('Content-Type', /json/)
+        // .expect('Location', /\//)
+        .expect(200)
+        // .expect(/Moved Temporarily/)
+        .expect(/"success":true/)
         .end(done)
       })
+
+      it('same email problem', function (done) {
+        request(app)
+        .post('/users')
+        .field('name', 'Foo bar')
+        .field('username', 'foobar')
+        .field('email', 'foobar@example.com')
+        .field('password', 'foobar')
+        .expect('Content-Type', /json/)
+        // .expect('Location', /\//)
+        .expect(200)
+        // .expect(/Moved Temporarily/)
+        .expect(/Email already exists/)
+        .end(done)
+        
+      });
 
       it('should insert a record to the database', function (done) {
         User.count(function (err, cnt) {
@@ -84,7 +103,58 @@ describe('Users', function () {
           done()
         })
       })
+
     })
+    describe('Login', function () {
+      it('Sign in with email and password', function (done) {
+        request(app)
+        .post('/users/session')
+        .field('email', 'foobar@example.com')
+        .field('password', 'foobar')
+        .expect(200)
+        .expect(/authToken/)
+        .end(done)
+      });
+    });
+    describe('AuthToken', function () {
+      it('should contain access_token', function (done) {
+        User.findOne({ username: 'foobar' }).exec(function (err, user) {
+          should.not.exist(err)
+          user.should.be.an.instanceOf(User)
+          user.authToken.should.have.length(32)
+          done()
+        })
+      })
+
+      it('should not allow to access /api', function (done) {
+        request(app)
+        .get('/api')
+        .expect(/Not valid request/)
+        .end(done)
+      });
+
+      it('should not allow access /api with wrong authToken', function (done) {
+        User.findOne({ username: 'foobar' }).exec(function (err, user) {
+          request(app)
+          .post('/api')
+          .field('authToken', '123')
+          .expect(404)
+          .expect(/"success":false/)
+          .end(done)
+        });
+      });
+
+
+      it('should allow access /api with authToken', function (done) {
+        User.findOne({ username: 'foobar' }).exec(function (err, user) {
+          request(app)
+          .post('/api')
+          .field('authToken', user.authToken)
+          .expect(/API is working/)
+          .end(done)
+        });
+      });
+    });
   })
 
   after(function (done) {

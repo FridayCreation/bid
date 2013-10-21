@@ -12,6 +12,7 @@
 var express = require('express')
   , fs = require('fs')
   , passport = require('passport')
+  , faye = require('faye')
 
 /**
  * Main application entry file.
@@ -40,13 +41,22 @@ var app = express()
 // express settings
 require('./config/express')(app, config, passport)
 
+// Bootstrap API
+require('./api/routes')(app, passport)
+
 // Bootstrap routes
 require('./config/routes')(app, passport)
 
 // Start the app by listening on <port>
 var port = process.env.PORT || 3000
+
+var bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
+bayeux.attach(app);
+
 app.listen(port)
 console.log('Express app started on port '+port)
+
+
 
 // expose app
 exports = module.exports = app
