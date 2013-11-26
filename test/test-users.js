@@ -129,7 +129,7 @@ describe('Users', function () {
       it('should not allow to access /api', function (done) {
         request(app)
         .get('/api')
-        .expect(/Not valid request/)
+        .expect(/Unauthorized/)
         .end(done)
       });
 
@@ -137,9 +137,9 @@ describe('Users', function () {
         User.findOne({ username: 'foobar' }).exec(function (err, user) {
           request(app)
           .post('/api')
-          .field('authToken', '123')
-          .expect(404)
-          .expect(/"success":false/)
+          .field('access_token', '123')
+          .expect(401)
+          .expect(/Unauthorized/)
           .end(done)
         });
       });
@@ -149,15 +149,12 @@ describe('Users', function () {
         User.findOne({ username: 'foobar' }).exec(function (err, user) {
           request(app)
           .post('/api')
-          .field('authToken', user.authToken)
-          .expect(/API is working/)
+          .field('access_token', user.authToken)
+          .expect(/foobar@example.com/)
           .end(done)
         });
       });
     });
   })
 
-  after(function (done) {
-    require('./helper').clearDb(done)
-  })
 })

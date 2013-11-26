@@ -1,33 +1,24 @@
 module.exports = function(app, passport) {
   
-  // Load middleware
-  var auth = require('../config/middlewares/authorization')
-
   // Load controllers
   var users = require('./controllers/users')
   var products = require('./controllers/products')
   var bids = require('./controllers/bids')
-  var richUsers = require('./controllers/richUsers')
 
   // set api header
-  app.all('/api/*',function(req,res,next){
+  app.all('/*',function(req,res,next){
     res.setHeader('content-type','text/json; charset=UTF-8');
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next(); 
   });
 
   // Middleware combo
-  TokenAuthentication = [ auth.requireAuthentication, users.load ]
-  RichUserTokenAuthentication = [ TokenAuthentication, richUsers.load ]
+  TokenAuthentication = passport.authenticate('bearer', { session: false })
 
-  app.get('/api', auth.requireAuthentication);
-  app.post('/api', TokenAuthentication, function(req, res){
-      res.send('API is working')
+  app.all('/api', TokenAuthentication, function(req, res){
+    res.send({ username: req.user.username, email: req.user.email });
   });
-
-  app.post('/api/superme', RichUserTokenAuthentication, function(req, res){
-    res.send(req.richUser)
-  })
 
   // Require authToken on post, put, del methods, get method should always safe
   app.post('/api/*', TokenAuthentication);
@@ -40,5 +31,5 @@ module.exports = function(app, passport) {
   app.param('pid', products.product)
 
   // bids
-  app.post('/api/product/:pid/bid', RichUserTokenAuthentication, products.product, bids.bid)
+  app.post('/api/product/:pid/bid', products.product, bids.bid)
 }

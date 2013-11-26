@@ -1,12 +1,3 @@
-exports.requireAuthentication = function(req, res, next){
-  if ( !req.body.authToken){
-    return res.send({'success':false,'errors':'Not valid request'})
-  }
-  next()
-}
-
-
-
 /* ----------- 以下代碼屬於 template --------- */
 
 

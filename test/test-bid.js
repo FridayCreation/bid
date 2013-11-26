@@ -10,10 +10,9 @@ var mongoose = require('mongoose')
   , context = describe
   , User = mongoose.model('User')
   , Product = mongoose.model('Product')
-  , RichUser = mongoose.model('RichUser')
   , fs = require('fs')
 
-var cookies, count, owner
+var cookies, count, owner, product
 
 describe('Bids behavior', function () {
 	
@@ -49,17 +48,12 @@ describe('Bids behavior', function () {
 		    	if(err){
 		    		User.findOne({username: 'vendor'}).exec(function(err, doc){
 		    			owner = doc
-		    			var richUser = new RichUser()
-					    richUser.user = owner
-					    richUser.save(done)
-		    			
+		    			done()
 		    		})
 		    	}
 		    	else{
-		    		owner = doc
-		    		var richUser = new RichUser()
-				    richUser.user = owner
-				    richUser.save(done)
+		    		owner = doc 		
+		    		done()
 		    	}	    	
 		    })
 	        
@@ -68,21 +62,31 @@ describe('Bids behavior', function () {
 	    it('(POST)User bid a product', function (done) {
 	    	Product.findOne({name: 'First'}).exec(function(err, pro){
 	    		pro.should.have.property('id')
+	    		product = pro
 	    		request(app)
 	    		.post('/api/product/'+pro.id+'/bid')
-	    		.field('authToken', owner.authToken)
+	    		.field('access_token', owner.authToken)
 	    		.field('value', '30')
 	    		.expect(200)
 	    		.end(done)
 	    	})
 	    });
 
-	    it('(POST) fail is bid price lower than current', function (done) {
+	    it('User should listen product channel', function(done){
+	    	User.findOne({ username: 'vendor'}).exec(function(err, doc){
+    			owner = doc
+    			owner.subscribes.should.be.instanceof(Array)
+    			owner.subscribes[0].should.equal('Product/'+product.id)
+    			done()
+    		})
+	    });
+
+	    it('(POST) fail if bid price lower than current', function (done) {
 	    	Product.findOne({name: 'First'}).exec(function(err, pro){
 	    		pro.should.have.property('id')
 	    		request(app)
 	    		.post('/api/product/'+pro.id+'/bid')
-	    		.field('authToken', owner.authToken)
+	    		.field('access_token', owner.authToken)
 	    		.field('value', '11')
 	    		.expect(200)
 	    		.expect(/Bid value lower than current/)

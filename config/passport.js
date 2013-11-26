@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
   , FacebookStrategy = require('passport-facebook').Strategy
   , GitHubStrategy = require('passport-github').Strategy
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+  , BearerStrategy = require('passport-http-bearer').Strategy
   , LinkedinStrategy = require('passport-linkedin').Strategy
   , User = mongoose.model('User')
 
@@ -21,6 +22,17 @@ module.exports = function (passport, config) {
       done(err, user)
     })
   })
+
+  // use bearer
+  passport.use(new BearerStrategy({},
+    function(token, done) {
+      User.findOne({ authToken: token }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        return done(null, user, { scope: 'all' });
+      });
+    }
+  ));
 
   // use local strategy
   passport.use(new LocalStrategy({

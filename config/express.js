@@ -94,11 +94,11 @@ module.exports = function (app, config, passport) {
 
       // log it
       // send emails if you want
-      console.error(err.stack)
+      // console.error(err.stack)
 
       // error page
       // res.status(500).render('500', { error: err.stack })
-      res.status(500).send({ errors: err.stack })
+      res.status(500).send({ 'success':false,  errors: err.stack })
     })
 
     // assume 404 since no middleware responded

@@ -6,7 +6,6 @@ var mongoose = require('mongoose')
 
 exports.bid = function(req, res){
   var user = req.user
-  var richUser = req.richUser
   var pro = req.product
   var value = req.body.value
   var errorMsg = {'success': false, 'errors': 'Bid value lower than current' }
@@ -34,7 +33,7 @@ exports.bid = function(req, res){
   	Activity.add( 'Product', product.id , {event: 'bid', remark: value, notify: true}, function(err, act){
       if(err) res.send({'success': false, 'errors': err })
       else{
-      	richUser.listen(act.channel, function(){
+      	user.listen(act.channel, function(){
       		res.send({'success': true, doc: act})
       	})
       }

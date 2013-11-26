@@ -47,7 +47,7 @@ describe('Products', function () {
 		    	User.findOne({ username: 'vendor' }).exec(function (err, user) {
 		          request(app)
 		          .post('/api/product')
-		          .field('authToken', user.authToken)
+		          .field('access_token', user.authToken)
 		          .expect(/no picture cannot create/)
 		          .end(function(err, res){
 			        if (err) return done(err);
@@ -61,7 +61,7 @@ describe('Products', function () {
 		    	User.findOne({ username: 'vendor' }).exec(function (err, user) {
 		          request(app)
 		          .post('/api/product')
-		          .field('authToken', user.authToken)
+		          .field('access_token', user.authToken)
 		          .attach('images', 'test/x.png')
 		          .expect(/Validation failed/)
 		          .end(function(err, res){
@@ -76,21 +76,24 @@ describe('Products', function () {
 		    	this.timeout(15000);
 		    	var t = new Date();
 				t.setSeconds(t.getSeconds() + 10);
-
-		    	request(app)
-		    	.post('/api/product')
-		    	.field('authToken', owner.authToken)
-		    	.field('name', 'First')
-		    	.field('description', 'This is the description')
-			    .field('base_price', '12')
-			    .field('tags', 'phone,HTC,kevin')
-			    .field('reference_urls[0]', 'http://inx.io')
-			    .field('date_start', new Date().toISOString())
-			    .field('date_end', t.toISOString())
-			    .attach('images', 'test/x.png')
-			    .expect(200)
-			    .expect(/"success":true/)
-		    	.end(done)
+				User.findOne({ username: 'vendor'}).exec(function (err, user) {
+					owner = user
+					request(app)
+			    	.post('/api/product')
+			    	.field('access_token', owner.authToken)
+			    	.field('name', 'First')
+			    	.field('description', 'This is the description')
+				    .field('base_price', '12')
+				    .field('tags', 'phone,HTC,kevin')
+				    .field('reference_urls[0]', 'http://inx.io')
+				    .field('date_start', new Date().toISOString())
+				    .field('date_end', t.toISOString())
+				    .attach('images', 'test/x.png')
+				    .expect(200)
+				    .expect(/"success":true/)
+			    	.end(done)
+				})
+		    	
 		    });
 
 		    it('should insert a record to the database', function (done) {

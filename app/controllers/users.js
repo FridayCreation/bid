@@ -6,7 +6,6 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , utils = require('../../lib/utils')
-  , RichUser = mongoose.model('RichUser')
 
 
 var login = function (req, res) {
@@ -83,15 +82,7 @@ exports.create = function (req, res) {
       })
     }
     else{
-      
-      var richuser = new RichUser()
-      richuser.user = user
-      richuser.save(function(err, richuser){
-        if( err)
-          res.send( {'success': false, err: error})
-        else
-          res.send( {'success': true})
-      })
+      res.send( {'success': true, 'doc': user})
       // req.logIn(user, function(err){
       //   if( err)
       //     res.send( {'success': false, err: error})

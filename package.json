@@ -36,6 +36,7 @@
     "passport-github": "latest",
     "passport-google-oauth": "latest",
     "passport-linkedin": "latest",
+    "passport-http-bearer": "latest",
     "imager": "latest",
     "notifier": "latest",
     "underscore": "latest",
@@ -45,7 +46,9 @@
     "hat": "0.0.3",
     "node-schedule": "~0.1.11",
     "faye": "~1.0.0",
-    "imgur-node-api": "0.0.2"
+    "imgur-node-api": "0.0.2",
+    "hat": "latest",
+    "gravatar": "latest"
   },
   "devDependencies": {
     "supertest": "latest",

@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
   , authTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin']
   , hat = require('hat')
+  , gravatar = require('gravatar')
 
 /**
  * User Schema
@@ -26,7 +27,12 @@ var UserSchema = new Schema({
   github: {},
   google: {},
   linkedin: {},
-  richUser: {type: Schema.ObjectId, ref: 'RichUser'}
+  
+  location: { type: String, default: ''},
+  role: {type: String, default: ''},
+  activate: { type: Boolean, default: true},
+  bids: { type: Schema.ObjectId, ref: 'Product'},
+  subscribes: [{ type: String, default: '/'}]
 })
 
 /**
@@ -101,6 +107,11 @@ UserSchema.pre('save', function(next) {
   // Generate a random access_token
   this.authToken = hat()
 
+  // set avatar for user
+  if( authTypes.indexOf(this.provider) === -1 ){
+    this.avatar = gravatar.url(this.email, {s: '200', d: 'wavatar'})
+  }
+
   if (!validatePresenceOf(this.password)
     && authTypes.indexOf(this.provider) === -1)
     next(new Error('Invalid password'))
@@ -113,6 +124,27 @@ UserSchema.pre('save', function(next) {
  */
 
 UserSchema.methods = {
+
+  /**
+   *   Subscribe channel use
+   */
+
+  listen: function(channel,cb){
+
+    if( !_.contains( this.subscribes, channel )){
+      this.subscribes.unshift(channel)
+      this.save(cb)
+    }
+    cb()
+  },
+
+  mute: function(channel,cb){
+    var index = this.subscribes.indexOf(channel)
+    if(  index > -1 ){
+      this.subscribes.splice(index,index+1);
+    }
+    cb()
+  },
 
   /**
    * Authenticate - check if the passwords are the same
