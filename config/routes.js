@@ -39,6 +39,7 @@ module.exports = function (app, passport) {
   });
 
 
+  // Get picture by http://graph.facebook.com/{facebook_id}/picture?type=square/large/small/normal
   app.get('/auth/facebook',
     passport.authenticate('facebook', {
       scope: [ 'email', 'user_about_me'],

@@ -5,6 +5,9 @@ module.exports = function(app, passport) {
   var products = require('./controllers/products')
   var bids = require('./controllers/bids')
 
+  var ajaxFileUpload = require('../config/middlewares/ajaxFileUpload')
+  app.all('/uploadfile', ajaxFileUpload.uploader)
+
   // set api header
   app.all('/*',function(req,res,next){
     res.setHeader('content-type','text/json; charset=UTF-8');
@@ -32,4 +35,5 @@ module.exports = function(app, passport) {
 
   // bids
   app.post('/api/product/:pid/bid', products.product, bids.bid)
+  
 }

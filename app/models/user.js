@@ -27,12 +27,17 @@ var UserSchema = new Schema({
   github: {},
   google: {},
   linkedin: {},
+  avatar: { type: String, default: ''},
   
   location: { type: String, default: ''},
   role: {type: String, default: ''},
   activate: { type: Boolean, default: true},
   bids: { type: Schema.ObjectId, ref: 'Product'},
-  subscribes: [{ type: String, default: '/'}]
+  subscribes: [{ type: String, default: '/'}],
+  contacts: [{ 
+    method: {type: String, default:''},
+    value: {type: String, default:''}
+  }]
 })
 
 /**

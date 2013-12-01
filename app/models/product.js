@@ -33,11 +33,13 @@ var ProductSchema = new Schema({
   description: { type: String, default: ''},
   base_price: { type: Number, default: 0},
   current_price: { type: Number, default: 0},
+  slug: {type: String, default: ''},
 
   tags: {type: [], get: getTags, set: setTags},
   photos: [ { type: String } ],
   reference_urls: [{type: String}],
   hit: { type: Number, default: 0},
+  provider: { type: String },
   
   date_start: {type : Date, default : Date.now},
   date_end: { type: Date },

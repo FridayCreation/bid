@@ -61,7 +61,7 @@ exports.photos = function(req, res, next){
       }
     }], function(err, result){
       if( _.isEmpty(req.body.photos) ){
-        res.send({'success': false, 'err': 'no picture cannot create'})
+        return next(new Error('no picture cannot create'))
       }
       else{
         next()
@@ -77,6 +77,8 @@ exports.create = function(req, res){
   req.body = _.pick(
     req.body,
     'name',
+    'slug',
+    'policy',
     'description',
     'base_price',
     'tags',
