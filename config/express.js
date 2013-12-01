@@ -8,10 +8,31 @@ var express = require('express')
   , flash = require('connect-flash')
   , helpers = require('view-helpers')
   , pkg = require('../package.json')
+  , upload = require('jquery-file-upload-middleware')
+
+// configure upload middleware
+upload.configure({
+    uploadDir: __dirname + '../../public/uploads',
+    uploadUrl: '/uploads',
+    imageTypes: /\.(gif|jpe?g|png)$/i,
+    imageVersions: {
+      thumbnail: {
+        width: 80,
+        height: 80
+      }
+    },
+    imageArgs: ['-auto-orient'],
+    accessControl: {
+        allowOrigin: '*',
+        allowMethods: 'OPTIONS, HEAD, GET, POST, PUT, DELETE'
+    }
+});
 
 module.exports = function (app, config, passport) {
 
   app.set('showStackError', true)
+
+  app.use('/upload', upload.fileHandler());
 
   // should be placed before express.static
   app.use(express.compress({

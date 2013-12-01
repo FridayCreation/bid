@@ -1,3 +1,5 @@
+var upload = require('jquery-file-upload-middleware')
+
 module.exports = function(app, passport) {
   
   // Load controllers
@@ -6,7 +8,10 @@ module.exports = function(app, passport) {
   var bids = require('./controllers/bids')
 
   var ajaxFileUpload = require('../config/middlewares/ajaxFileUpload')
-  app.all('/uploadfile', ajaxFileUpload.uploader)
+  // app.all('/uploadfile', ajaxFileUpload.uploader)
+
+  // setup upload middleware
+  // app.all('/upload', upload.fileHandler());
 
   // set api header
   app.all('/*',function(req,res,next){

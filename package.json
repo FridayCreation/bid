@@ -48,7 +48,9 @@
     "faye": "~1.0.0",
     "imgur-node-api": "0.0.2",
     "hat": "latest",
-    "gravatar": "latest"
+    "gravatar": "latest",
+    "jquery-file-upload-middleware":"latest",
+    "newrelic": "latest"
   },
   "devDependencies": {
     "supertest": "latest",
