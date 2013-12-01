@@ -51,7 +51,7 @@ require('./api/routes')(app, passport)
 require('./config/routes')(app, passport)
 
 // Start the app by listening on <port>
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 6000
 
 var bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
 bayeux.attach(app);
