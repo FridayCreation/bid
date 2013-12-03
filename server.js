@@ -26,6 +26,7 @@ var express = require('express')
 // if test env, load example file
 var env = process.env.NODE_ENV || 'development'
   , config = require('./config/config')[env]
+  , auth = require('./config/middlewares/authorization')
   , mongoose = require('mongoose')
 
 // Bootstrap db connection
@@ -44,14 +45,14 @@ var app = express()
 // express settings
 require('./config/express')(app, config, passport)
 
-// Bootstrap API
-require('./api/routes')(app, passport)
-
 // Bootstrap routes
 require('./config/routes')(app, passport)
 
+// Bootstrap API
+require('./api/routes')(app, passport)
+
 // Start the app by listening on <port>
-var port = process.env.PORT || 6000
+var port = process.env.PORT || 3000
 
 var bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 45});
 bayeux.attach(app);

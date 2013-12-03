@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
   // app.all('/upload', upload.fileHandler());
 
   // set api header
-  app.all('/*',function(req,res,next){
+  app.all('/api/*',function(req,res,next){
     res.setHeader('content-type','text/json; charset=UTF-8');
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -40,5 +40,10 @@ module.exports = function(app, passport) {
 
   // bids
   app.post('/api/product/:pid/bid', products.product, bids.bid)
+
+  // //404
+  // app.all('/api/*',function(req, res, next){
+  //   next(new Error('not found'))
+  // })
   
 }

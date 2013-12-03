@@ -14,7 +14,7 @@ var login = function (req, res) {
     delete req.session.returnTo
     return
   }
-  res.send({'info':'login ok'})
+  res.send({'info': req.user})
 }
 
 exports.signin = function (req, res) {
