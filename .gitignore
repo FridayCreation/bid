@@ -2,3 +2,4 @@ node_modules/
 .monitor
 Makefile
 newrelic_agent.log
+public/lib/
