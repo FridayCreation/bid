@@ -11,8 +11,11 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "lib/bower_components",
+    "public/lib/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "*"
+  }
 }

@@ -12,10 +12,11 @@ $(document).ready(function () {
       }
     });
   });
-
-  $('#tags').tagsInput({
-    'height':'60px',
-    'width':'280px'
-  });
-
 });
+
+    
+angular.module('Stallket.Signup', ['ui']);
+
+function SignupCtrl($scope) {
+ 
+}
