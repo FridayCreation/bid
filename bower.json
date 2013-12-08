@@ -16,6 +16,14 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "animate.css": "~3.0.0",
+    "font-awesome": "~4.0.3",
+    "angular-ui": "~0.4.0",
+    "angular-route": "~1.2.4",
+    "angular": "~1.2.4",
+    "angular-resource": "~1.2.4",
+    "underscore": "~1.5.2",
+    "restangular": "~1.1.8"
   }
 }
