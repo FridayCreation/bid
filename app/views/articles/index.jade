@@ -4,6 +4,8 @@ block main
   h1= title
 
 block content
+  a(href="/login", title="Login") Login | 
+  a(href="/logout", title="logout") Logout
   - if (articles.length)
     - each article in articles
       .article

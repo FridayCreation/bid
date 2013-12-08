@@ -9,8 +9,8 @@ var async = require('async')
  */
 
 var users = require('../app/controllers/users')
-  // , articles = require('../app/controllers/articles')
-  // , auth = require('./middlewares/authorization')
+  , articles = require('../app/controllers/articles')
+  , auth = require('./middlewares/authorization')
 
 /**
  * Route middlewares
@@ -29,7 +29,7 @@ module.exports = function (app, passport) {
   app.get('/logout', users.logout)
   app.post('/users', users.create)
   // home route
-  app.get('/', users.login)
+  app.get('/', auth.requiresLogin, articles.index)
 
   app.post('/users/session', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
@@ -38,7 +38,14 @@ module.exports = function (app, passport) {
         return res.send({'errors': info.message })
       }
 
-      return res.send({'success': true, 'user': user});
+      // manually login the user once successfully signed up
+      req.logIn(user, function(err) {
+        if (err) return next(err)
+        // return res.redirect('/')
+        return res.send({'success': true, 'user': user});
+      })
+
+      // return res.send({'success': true, 'user': user});
 
     })(req, res, next);
   });
