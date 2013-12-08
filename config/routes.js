@@ -25,7 +25,7 @@ var users = require('../app/controllers/users')
 module.exports = function (app, passport) {
   
   app.get('/login', users.login)
-  app.get('/signup', users.signup)
+  app.get('/join', users.signup)
   app.get('/logout', users.logout)
   app.post('/users', users.create)
   // home route

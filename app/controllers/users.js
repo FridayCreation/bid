@@ -44,7 +44,7 @@ exports.login = function (req, res) {
  */
 
 exports.signup = function (req, res) {
-  res.render('users/signup', {
+  res.render('users/join', {
     title: 'Sign up',
     user: new User()
   })

@@ -1,3 +1,4 @@
 node_modules/
 .monitor
 newrelic_agent.log
+public/lib/

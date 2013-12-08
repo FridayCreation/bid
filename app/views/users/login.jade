@@ -1,23 +1,23 @@
-extends auth
+extends ../layouts/auth
 
-block auth
-  form.offset1.login.form-horizontal(action="/users/session", method="post")
+block content
+  form.form-signin(action="/users/session", method="post")
     input(type='hidden', name='_csrf', value="#{csrf_token}")
+    h3.form-signin-heading 用戶登入
+    .input-group.upper-group
+      input.form-control(type='text', name="email", placeholder='電郵', required='required', autofocus='autofocus')
+      span.input-group-addon
+        i.fa.fa-envelope
+    .input-group.bottom-group
+      input.form-control(type='password', name="password", placeholder='密碼', required='required')
+      span.input-group-addon
+        i.fa.fa-key
+    label.checkbox.pull-left
+      input(type='checkbox', value='remember-me')
+      | 記住我
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') 登入
+    p.text-center.forgot-password
+      a(href='#') 忘記用戶密碼?
+      | or
+      a(href='join') 立即註冊
 
-    p.offset2.error= message
-
-    .control-group
-      label.control-label(for='email') Email
-      .controls
-        input.input-medium#email(type='email', name="email", placeholder='Email')
-
-    .control-group
-      label.control-label(for='password') Password
-      .controls
-        input.input-medium#password(type='password', name="password", placeholder='Password')
-
-    .form-actions
-      button.btn.btn-primary(type='submit') Login
-      &nbsp;
-      | or&nbsp;
-      a.show-signup(href="/signup") sign up

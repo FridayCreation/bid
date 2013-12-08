@@ -63,6 +63,7 @@ var validatePresenceOf = function (value) {
 
 // the below 4 validations only apply if you are signing up traditionally
 
+<<<<<<< HEAD
 /*
 UserSchema.path('name').validate(function (name) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -70,6 +71,13 @@ UserSchema.path('name').validate(function (name) {
   return name.length
 }, 'Name cannot be blank')
 */
+=======
+// UserSchema.path('name').validate(function (name) {
+//   // if you are authenticating by any of the oauth strategies, don't validate
+//   if (authTypes.indexOf(this.provider) !== -1) return true
+//   return name.length
+// }, 'Name cannot be blank')
+>>>>>>> 064051f4040b2bd63c1b14d7748472b3802c4bb2
 
 UserSchema.path('email').validate(function (email) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -91,6 +99,7 @@ UserSchema.path('email').validate(function (email, fn) {
   } else fn(true)
 }, 'Email already exists')
 
+<<<<<<< HEAD
 /*
 UserSchema.path('username').validate(function (username) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -98,6 +107,13 @@ UserSchema.path('username').validate(function (username) {
   return username.length
 }, 'Username cannot be blank')
 */
+=======
+// UserSchema.path('username').validate(function (username) {
+//   // if you are authenticating by any of the oauth strategies, don't validate
+//   if (authTypes.indexOf(this.provider) !== -1) return true
+//   return username.length
+// }, 'Username cannot be blank')
+>>>>>>> 064051f4040b2bd63c1b14d7748472b3802c4bb2
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   // if you are authenticating by any of the oauth strategies, don't validate
