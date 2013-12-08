@@ -10,22 +10,28 @@ block content
         .col-sm-12
           .steps
             .steps-list
-              section.active 
+              section(ng-class="{active: step == 1}")
                 strong.pull-left 1.
                 p 塡寫基本資料
                 span Account
-              section 
+              section(ng-class="{active: step == 2}")
                 strong.pull-left 2.
                 p 商戶聯絡資料
                 span Profile 
-              section 
+              section(ng-class="{active: step == 3}")
                 strong.pull-left 3.
                 p 選擇服務
                 span Service
       .row
-        section#step1
+        section.col-sm-12
+          .alert.alert-danger(ng-repeat="alert in alerts") 
+            {{alert.msg}}
+            button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+      .row
+        section.clearfix(ng-show="step == 1")
           .col-sm-7
-            form.form-signup(name="form")
+
+            form.form-signup(name="form", ng-submit="create()")
               h3.form-signup-heading
                 | 註冊帳號 
               .form-group
@@ -46,7 +52,7 @@ block content
               p 當你按下一步時，即你同時同意我們的 
                 a(href="#")用戶條款
               hr
-              button.btn.btn-primary(type='submit', ng-click="next()") 下一步
+              button.btn.btn-primary(type='submit', ng-click="") 下一步
 
           .col-sm-5
             .conditional-list
@@ -65,44 +71,51 @@ block content
                   li.conditional
                     i.fa.fa-check 
                     span  費用全免
-      //- section#step2.hidden
-      //-   .col-sm-7
-      //-     form.form-signin(action="/users", method="post")
-      //-       h3.form-signin-heading
-      //-         | 註冊帳號 
-      //-       .form-group
-      //-         label.control-label(for='email') 電郵
-      //-         input.form-control(type='email', name="email", required='required')
-      //-         <span class="help-block">作為登入帳號，請確實塡寫</span>
-      //-       .form-group
-      //-         label.control-label(for='') 密碼
-      //-         input.form-control(type='password', required='required')
-      //-         <span class="help-block">建議長度為六或以上</span>
-      //-       .form-group
-      //-         label.control-label(for='') 重複密碼
-      //-         input.form-control(type='password', name="confirm_password", required='required')
-      //-       hr
-      //-       p 當你按下一步時，即你同時同意我們的 
-      //-         a(href="#")用戶條款
-      //-       hr
-      //-       button.btn.btn-primary(type='submit') 下一步
+        section.clearfix(ng-show="step == 2")
+          .col-sm-7
+            form.form-signup(name="edit-form", ng-submit="create()")
+              h3.form-signup-heading
+                | 補充你的聯絡資料 
+              .form-group
+                label.control-label(for='username') 用戶暱稱
+                input.form-control(type='text', name="username", ng-model="username" required)
+                span(class="help-block") 在Stallket顯示的用戶名稱
+              .form-group
+                label.control-label(for='name') 稱呼
+                input.form-control(type='text', name="name", ng-model="name" required)
+                span(class="help-block") 例如 Peter Wong, 陳先生等
+              .form-group
+                label.control-label(for='wechat') 聯絡電話
+                input.form-control(type='text', name="wechat", ng-model="wechat")
+                span(class="help-block") 希望其他用戶使用WeChat聯絡
+              .form-group
+                label.control-label(for='wechat') WeChat ID
+                input.form-control(type='text', name="wechat", ng-model="wechat")
+                span(class="help-block") 希望其他用戶使用WeChat聯絡
 
-      //-   .col-sm-5
-      //-     .conditional-list
-      //-       .conditional-list-panel
-      //-         ul.list
-      //-           li.conditional
-      //-             strong 立即最大化你的收益
-      //-         hr
-      //-         ul.list
-      //-           li.conditional
-      //-             i.fa.fa-check 
-      //-             span  為你商品快速構建專頁
-      //-           li.conditional
-      //-             i.fa.fa-check 
-      //-             span  自由銷售，不設限制
-      //-           li.conditional
-      //-             i.fa.fa-check 
-      //-             span  費用全免
+                
+              hr
+              p 當你按下一步時，即你同時同意我們的 
+                a(href="#")用戶條款
+              hr
+              button.btn.btn-primary(type='submit', ng-click="") 下一步
+
+          .col-sm-5
+            .conditional-list
+              .conditional-list-panel
+                ul.list
+                  li.conditional
+                    strong 立即最大化你的收益
+                hr
+                ul.list
+                  li.conditional
+                    i.fa.fa-check 
+                    span  為你商品快速構建專頁
+                  li.conditional
+                    i.fa.fa-check 
+                    span  自由銷售，不設限制
+                  li.conditional
+                    i.fa.fa-check 
+                    span  費用全免
 
 

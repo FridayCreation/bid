@@ -221,45 +221,46 @@ body {
   display: table;
   content: "";
   border-radius: 4px;
+  margin-bottom: 20px;
 }
-/* line 247, ../sass/app.scss */
+/* line 248, ../sass/app.scss */
 .steps .steps-list {
   background: white;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
 }
-/* line 253, ../sass/app.scss */
+/* line 254, ../sass/app.scss */
 .steps section {
   border-right: 1px solid #e3e3e3;
   padding: 16px;
   display: inline-block;
   width: 33%;
 }
-/* line 259, ../sass/app.scss */
+/* line 260, ../sass/app.scss */
 .steps section strong {
   padding: 4px 16px 4px 4px;
   font-size: 24px;
   color: #bbb;
 }
-/* line 265, ../sass/app.scss */
+/* line 266, ../sass/app.scss */
 .steps section p {
   margin-bottom: 2px;
   font-size: 16px;
   color: #bbb;
 }
-/* line 271, ../sass/app.scss */
+/* line 272, ../sass/app.scss */
 .steps section span {
   color: #bbb;
 }
-/* line 276, ../sass/app.scss */
+/* line 277, ../sass/app.scss */
 .steps section:last-child {
   border-right: none;
 }
-/* line 283, ../sass/app.scss */
+/* line 284, ../sass/app.scss */
 .steps section.active strong {
   color: #3f94c5;
 }
-/* line 287, ../sass/app.scss */
+/* line 288, ../sass/app.scss */
 .steps section.active p, .steps section.active span {
   color: #333;
 }
@@ -269,24 +270,24 @@ body {
  * conditional list
  * -------------------------------------------------------
  */
-/* line 299, ../sass/app.scss */
+/* line 300, ../sass/app.scss */
 .conditional-list {
   margin-top: 24px;
   background: #f9f9f9;
   border-radius: 4px;
   padding: 4px;
 }
-/* line 305, ../sass/app.scss */
+/* line 306, ../sass/app.scss */
 .conditional-list .conditional-list-panel {
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   background: white;
 }
-/* line 310, ../sass/app.scss */
+/* line 311, ../sass/app.scss */
 .conditional-list .conditional-list-panel hr {
   margin: 4px 0;
 }
-/* line 314, ../sass/app.scss */
+/* line 315, ../sass/app.scss */
 .conditional-list .conditional-list-panel .list {
   padding: 16px;
   list-style: none;
@@ -294,19 +295,19 @@ body {
   font-size: 16px;
   color: #666;
 }
-/* line 321, ../sass/app.scss */
+/* line 322, ../sass/app.scss */
 .conditional-list .conditional-list-panel .list .conditional {
   margin-bottom: 8px;
 }
-/* line 323, ../sass/app.scss */
+/* line 324, ../sass/app.scss */
 .conditional-list .conditional-list-panel .list .conditional i {
   color: #6ec337;
 }
-/* line 328, ../sass/app.scss */
+/* line 329, ../sass/app.scss */
 .conditional-list .conditional-list-panel .list .conditional:last-child {
   margin-bottom: 0px;
 }
-/* line 333, ../sass/app.scss */
+/* line 334, ../sass/app.scss */
 .conditional-list .conditional-list-panel .list:last-child {
   margin-bottom: 10px;
 }
@@ -316,7 +317,7 @@ body {
  * form sign in 
  * -------------------------------------------------------
  */
-/* line 348, ../sass/app.scss */
+/* line 349, ../sass/app.scss */
 input.ng-invalid:focus,
 textarea.ng-invalid:focus,
 select.ng-invalid:focus {
@@ -326,7 +327,7 @@ select.ng-invalid:focus {
   box-shadow: 0 0 6px #f8b9b7;
 }
 
-/* line 357, ../sass/app.scss */
+/* line 358, ../sass/app.scss */
 input.ng-valid:focus,
 textarea.ng-valid:focus,
 select.ng-valid:focus {
@@ -336,18 +337,18 @@ select.ng-valid:focus {
   box-shadow: 0 0 6px #c8ffc1;
 }
 
-/* line 365, ../sass/app.scss */
+/* line 366, ../sass/app.scss */
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
 }
 
-/* line 369, ../sass/app.scss */
+/* line 370, ../sass/app.scss */
 .form-signin .checkbox {
   font-weight: normal;
 }
 
-/* line 374, ../sass/app.scss */
+/* line 375, ../sass/app.scss */
 .form-signin .form-control,
 .form-signup .form-control {
   position: relative;
@@ -360,14 +361,14 @@ select.ng-valid:focus {
   box-sizing: border-box;
 }
 
-/* line 388, ../sass/app.scss */
+/* line 389, ../sass/app.scss */
 .form-signin .upper-group .input-group-addon,
 .form-signin .bottom-group .input-group-addon,
 .form-signin .mid-group .input-group-addon {
   border-left: none;
   background: white;
 }
-/* line 391, ../sass/app.scss */
+/* line 392, ../sass/app.scss */
 .form-signin .upper-group .input-group-addon i,
 .form-signin .bottom-group .input-group-addon i,
 .form-signin .mid-group .input-group-addon i {
@@ -375,58 +376,58 @@ select.ng-valid:focus {
   font-size: 18px;
 }
 
-/* line 398, ../sass/app.scss */
+/* line 399, ../sass/app.scss */
 .form-signin .mid-group {
   margin-top: -1px;
 }
-/* line 400, ../sass/app.scss */
+/* line 401, ../sass/app.scss */
 .form-signin .mid-group input {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-/* line 407, ../sass/app.scss */
+/* line 408, ../sass/app.scss */
 .form-signin .bottom-group {
   margin-top: -1px;
 }
-/* line 409, ../sass/app.scss */
+/* line 410, ../sass/app.scss */
 .form-signin .bottom-group input {
   border-top-right-radius: 0;
 }
 
-/* line 414, ../sass/app.scss */
+/* line 415, ../sass/app.scss */
 .form-signin .upper-group .input-group-addon {
   border-bottom-right-radius: 0;
 }
 
-/* line 418, ../sass/app.scss */
+/* line 419, ../sass/app.scss */
 .form-signin .mid-group .input-group-addon {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-/* line 423, ../sass/app.scss */
+/* line 424, ../sass/app.scss */
 .form-signin .bottom-group .input-group-addon {
   border-top-right-radius: 0;
 }
 
-/* line 427, ../sass/app.scss */
+/* line 428, ../sass/app.scss */
 .form-signin .form-control:focus {
   z-index: 2;
 }
 
-/* line 431, ../sass/app.scss */
+/* line 432, ../sass/app.scss */
 .form-signin .upper-group {
   margin-bottom: -1px;
 }
-/* line 434, ../sass/app.scss */
+/* line 435, ../sass/app.scss */
 .form-signin .upper-group input {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-/* line 440, ../sass/app.scss */
+/* line 441, ../sass/app.scss */
 .form-signin .forgot-password {
   padding: 16px;
 }
