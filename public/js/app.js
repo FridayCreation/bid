@@ -56,13 +56,31 @@ angular.module('Stallket.Signup', ['ui', 'restangular', 'ngRoute']).
 
 
 function SignupCtrl($scope, Restangular) {
-  var baseUsers = Restangular.all('users');
+  var baseUsers = Restangular.all('users'),
+      master = {
+        username: '',
+        name: '',
+        fuck: '',
+        contacts:[
+          {type:'phone', value:'123123123123123'}
+        ]
+      };
+
+
   $scope.alerts = [];
   $scope.step = 1;
+
+
+  $scope.next = function() {
+    if ($scope.step === 1) $scope.create();
+    else if ($scope.step === 2) $scope.update();
+  }
 
   $scope.create = function() {
     $scope.alerts = [];
 
+    $scope.step = 2;
+    return;
     //sign up the form when it is valid
     if ($scope.form.$valid) {
 
@@ -84,6 +102,10 @@ function SignupCtrl($scope, Restangular) {
     }
   }
 
+  $scope.update = function() {
+    //do something
+  }
+
   $scope.user = function() {
 
     //convert form to json
@@ -98,4 +120,16 @@ function SignupCtrl($scope, Restangular) {
   $scope.pushAlert = function(message) {
     $scope.alerts.push({msg: message});
   }
+
+  $scope.addContact = function() {
+    console.log($scope.editForm);
+    // $scope.editForm.contacts.push({type:'', value:''});
+  }
+
+  $scope.cancelEdit = function() {
+    $scope.editForm = angular.copy(master);
+    console.log($scope.editForm);
+  }
+
+  $scope.cancelEdit();
 }
