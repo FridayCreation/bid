@@ -22,4 +22,4 @@ test-end:
 		--reporter $(REPORTER) \
 		test/test-end.js
 
-.PHONY: test test-end test-bids
+.PHONY: test test-end test-bids test-users

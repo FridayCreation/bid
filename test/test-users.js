@@ -144,7 +144,6 @@ describe('Users', function () {
         });
       });
 
-
       it('should allow access /api with authToken', function (done) {
         User.findOne({ username: 'foobar' }).exec(function (err, user) {
           request(app)
@@ -155,6 +154,37 @@ describe('Users', function () {
         });
       });
     });
+    describe('Update user info', function () {
+      // it('update user\'s name and username', function (done) {
+      //   User.findOne({ username: 'foobar' }).exec(function (err, user) {
+      //     request(app)
+      //     .put('/api/user')
+      //     .field('access_token', user.authToken)
+      //     .field('name', 'myNewName')
+      //     .expect(200)
+      //     .expect(/myNewName/)
+      //     .end(done)
+      //   });
+      // });
+      it('update user\'s coutact', function (done) {
+
+        var myPhone = JSON.stringify({'phone': '62462436'})
+        var myWechat = JSON.stringify({'wechat': '15315115'})
+        User.findOne({ username: 'foobar' }).exec(function (err, user) {
+          request(app)
+          .put('/api/user')
+          .field('access_token', user.authToken)
+          .field('contacts[0]', myPhone)
+          .field('contacts[1]', myWechat)
+          .expect(200)
+          .expect(/62462436/)
+          .expect(/15315115/)
+          .end(done)
+        });
+      });
+
+    });
+  
   })
 
 })

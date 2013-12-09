@@ -41,9 +41,8 @@ module.exports = function(app, passport) {
   // bids
   app.post('/api/product/:pid/bid', products.product, bids.bid)
 
-  // //404
-  // app.all('/api/*',function(req, res, next){
-  //   next(new Error('not found'))
-  // })
+
+  // Users info
+  app.put('/api/user', TokenAuthentication, users.update)
   
 }
