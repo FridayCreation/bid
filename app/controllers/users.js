@@ -77,6 +77,7 @@ exports.create = function (req, res) {
   user.save(function(err, user){
     if(err){
       res.send({
+        'success':false,
         'errors': err.errors,
         user: user
       })
