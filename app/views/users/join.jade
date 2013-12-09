@@ -31,7 +31,7 @@ block content
         section.clearfix(ng-show="step == 1")
           .col-sm-7
 
-            form.form-signup(name="form", ng-submit="create()")
+            .form-signup(name="form")
               h3.form-signup-heading
                 | 註冊帳號 
               .form-group
@@ -52,7 +52,7 @@ block content
               p 當你按下一步時，即你同時同意我們的 
                 a(href="#")用戶條款
               hr
-              button.btn.btn-primary(type='submit', ng-click="") 下一步
+              button.btn.btn-primary(ng-click="next()") 下一步
 
           .col-sm-5
             .conditional-list
@@ -73,25 +73,29 @@ block content
                     span  費用全免
         section.clearfix(ng-show="step == 2")
           .col-sm-7
-            form.form-signup(name="edit-form", ng-submit="create()")
+            .form-signup(name="editForm", ng-submit="create()")
               h3.form-signup-heading
                 | 補充你的聯絡資料 
               .form-group
                 label.control-label(for='username') 用戶暱稱
-                input.form-control(type='text', name="username", ng-model="username" required)
+                input.form-control(type='text', name="username", ng-model="editForm.username" required)
                 span(class="help-block") 在Stallket顯示的用戶名稱
               .form-group
                 label.control-label(for='name') 稱呼
-                input.form-control(type='text', name="name", ng-model="name" required)
+                input.form-control(type='text', name="name", ng-model="editForm.name" required)
                 span(class="help-block") 例如 Peter Wong, 陳先生等
               .form-group
-                label.control-label(for='wechat') 聯絡電話
-                input.form-control(type='text', name="wechat", ng-model="wechat")
-                span(class="help-block") 希望其他用戶使用WeChat聯絡
-              .form-group
-                label.control-label(for='wechat') WeChat ID
-                input.form-control(type='text', name="wechat", ng-model="wechat")
-                span(class="help-block") 希望其他用戶使用WeChat聯絡
+                label Contacts:
+                  a(href='', ng-click='addContact()') add
+                  div(ng-repeat='contact in editForm.contacts')
+                    select(ng-model='contact.type')
+                      option email
+                      option phone
+                      option pager
+                      option IM
+                    input(type='text', ng-model='contact.value', required='required')
+                    a(href='', ng-click='removeContact($index)') X
+
 
                 
               hr
